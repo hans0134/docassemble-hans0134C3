@@ -1,0 +1,47 @@
+---
+variable name: LWHperson_info
+use objects: True
+data: menu_items
+  - Name: Dale William Hanson
+    Age: 64
+    Hobbies: Music
+    Do you like pets?: Yes
+  - Name: Jan Leslie Forsten-Hanson
+    Age: 62
+    Hobbies: Walking
+    Do you like pets?: Yes
+  - Name: Luke William hanson
+    Age: 31
+    Hobbies: Music
+    Do you like pets?: Yes
+---
+mandatory: True
+question: Please check the information you provided is correct.
+subquestion: |
+
+  Here is the result of the information you provided.
+  
+  ${ LWHquestion_table }
+attachment:
+  docx template file: B2_01_advanced_jinja.docx
+buttons:
+  - Exit: exit
+  - Restart: restart
+---
+table: LWHquestion_table
+rows:  LWHquestions
+columns:
+  - Question: |
+      row_item['LWHquestion']
+  - Selected answers: |
+      row_item['LWHanswers'].true_values()
+  - No. Selected answers: |
+      len(row_item['LWHanswers'].true_values())
+---
+question: |
+  ${ LWHquestions[i]['LWHquestion'] }
+fields:
+  - no label: LWHquestions[i]['LWHanswers']
+    datatype: checkboxes
+    code: LWHquestions[i]['LWHchoices']
+---
